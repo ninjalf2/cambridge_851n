@@ -1,12 +1,12 @@
 {
-  "domain": "cambridge_cxn",
-  "name": "Cambridge Audio CXN",
+  "domain": "cambridge_851n",
+  "name": "Cambridge Audio Azur 851N",
   "version": "0.5",
   "integration_type": "entity",
-  "documentation": "https://github.com/lievencoghe/cambridge_cxn",
-  "issue_tracker": "https://github.com/lievencoghe/cambridge_cxn/issues",
+  "documentation": "https://github.com/ninjalf2/cambridge_851n",
+  "issue_tracker": "https://github.com/ninjalf2/cambridge_851n/issues",
   "requirements": [],
   "dependencies": [],
-  "codeowners": ["@lievencoghe"],
+  "codeowners": ["@ninjalf2"],
   "iot_class": "local_polling"
 }

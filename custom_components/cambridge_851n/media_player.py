@@ -1,17 +1,17 @@
 """
-Support for interface with a Cambridge Audio CXN media player.
+Support for interface with a Cambridge Audio Azur 851N media player.
 
 For more details about this platform, please refer to the documentation at
-https://github.com/lievencoghe/cambridge_cxn
+https://github.com/ninjalf2/cambridge_851n
 """
-
 import json
 import logging
 import urllib.request
 import voluptuous as vol
 
-from homeassistant.components.media_player import MediaPlayerEntity, PLATFORM_SCHEMA
+import homeassistant.helpers.config_validation as cv
 
+from homeassistant.components.media_player import MediaPlayerEntity, PLATFORM_SCHEMA
 from homeassistant.components.media_player.const import (
     SUPPORT_PAUSE,
     SUPPORT_PLAY,
@@ -27,15 +27,22 @@ from homeassistant.components.media_player.const import (
     SUPPORT_SHUFFLE_SET,
     SUPPORT_REPEAT_SET
 )
-
-from homeassistant.const import CONF_HOST, CONF_NAME, STATE_OFF, STATE_ON, STATE_PAUSED, STATE_PLAYING, STATE_IDLE, STATE_STANDBY
-import homeassistant.helpers.config_validation as cv
+from homeassistant.const import (
+    CONF_HOST,
+    CONF_NAME,
+    STATE_OFF,
+    STATE_ON,
+    STATE_PAUSED,
+    STATE_PLAYING,
+    STATE_IDLE,
+    STATE_STANDBY
+)
 
 __version__ = "0.5"
 
 _LOGGER = logging.getLogger(__name__)
 
-SUPPORT_CXN = (
+SUPPORT_851N = (
     SUPPORT_PAUSE
     | SUPPORT_PLAY
     | SUPPORT_STOP
@@ -49,7 +56,7 @@ SUPPORT_CXN = (
     | SUPPORT_REPEAT_SET
 )
 
-SUPPORT_CXN_PREAMP = (
+SUPPORT_851N_PREAMP = (
     SUPPORT_PAUSE
     | SUPPORT_PLAY
     | SUPPORT_STOP
@@ -65,7 +72,7 @@ SUPPORT_CXN_PREAMP = (
     | SUPPORT_REPEAT_SET
 )
 
-DEFAULT_NAME = "Cambridge Audio CXN"
+DEFAULT_NAME = "Cambridge Audio Azur 851N"
 DEVICE_CLASS = "receiver"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -81,15 +88,15 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     name = config.get(CONF_NAME)
 
     if host is None:
-        _LOGGER.error("No Cambridge CXN IP address found in configuration file")
+        _LOGGER.error("No Cambridge Audio Azur 851N IP address found in configuration file")
         return
 
-    add_devices([CambridgeCXNDevice(host, name)])
+    add_devices([Cambridge851NDevice(host, name)])
 
 
-class CambridgeCXNDevice(MediaPlayerEntity):
+class Cambridge851NDevice(MediaPlayerEntity):
     def __init__(self, host, name):
-        _LOGGER.info("Setting up Cambridge CXN")
+        _LOGGER.info("Setting up Cambridge Audio Azur 851N")
         self._host = host
         self._max_volume = 100
         self._mediasource = ""
@@ -111,18 +118,18 @@ class CambridgeCXNDevice(MediaPlayerEntity):
         self._media_album_name = None
         self._media_duration = None
 
-        _LOGGER.debug( "Set up Cambridge CXN with IP: %s", host)
+        _LOGGER.debug( "Set up Cambridge Audio Azur 851N with IP: %s", host)
 
     def _setup_sources(self):
         if self._should_setup_sources:
-            _LOGGER.debug("Setting up CXN sources")
+            _LOGGER.debug("Setting up Cambridge Audio Azur 851N sources")
             sources = json.loads(self._command("/smoip/system/sources"))["data"]
             sources2 = sources.get("sources")
             self._source_list = {}
             self._source_list_reverse = {}
 
             for i in sources2:
-                _LOGGER.debug("Setting up CXN sources... %s", i["id"])
+                _LOGGER.debug("Setting up Cambridge Audio Azur 851N sources... %s", i["id"])
                 source = i["id"]
                 configured_name = i["name"]
                 self._source_list[source] = configured_name
@@ -131,7 +138,7 @@ class CambridgeCXNDevice(MediaPlayerEntity):
             presets = json.loads(self._command("/smoip/presets/list"))["data"]
             presets2 = presets.get("presets")
             for i in presets2:
-                _LOGGER.debug("Setting up CXN sources... %s", i["id"])
+                _LOGGER.debug("Setting up Cambridge Audio Azur 851N sources... %s", i["id"])
                 source = str(i["id"])
                 configured_name = i["name"]
                 self._source_list[source] = configured_name
@@ -261,8 +268,8 @@ class CambridgeCXNDevice(MediaPlayerEntity):
     @property
     def supported_features(self):
         if self._preamp_mode:
-            return SUPPORT_CXN_PREAMP
-        return SUPPORT_CXN
+            return SUPPORT_851N_PREAMP
+        return SUPPORT_851N
 
     @property
     def media_duration(self):
@@ -282,7 +289,7 @@ class CambridgeCXNDevice(MediaPlayerEntity):
 
     @property
     def media_image_url(self):
-        _LOGGER.debug("CXN Artwork URL: %s", self._artwork_url)
+        _LOGGER.debug("Cambridge Audio Azur 851N Artwork URL: %s", self._artwork_url)
         return self._artwork_url
 
     @property
