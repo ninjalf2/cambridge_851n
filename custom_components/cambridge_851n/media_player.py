@@ -11,22 +11,7 @@ import voluptuous as vol
 
 import homeassistant.helpers.config_validation as cv
 
-from homeassistant.components.media_player import MediaPlayerEntity, PLATFORM_SCHEMA
-from homeassistant.components.media_player.const import (
-    SUPPORT_PAUSE,
-    SUPPORT_PLAY,
-    SUPPORT_STOP,
-    SUPPORT_PREVIOUS_TRACK,
-    SUPPORT_NEXT_TRACK,
-    SUPPORT_SELECT_SOURCE,
-    SUPPORT_TURN_OFF,
-    SUPPORT_TURN_ON,
-    SUPPORT_VOLUME_MUTE,
-    SUPPORT_VOLUME_STEP,
-    SUPPORT_VOLUME_SET,
-    SUPPORT_SHUFFLE_SET,
-    SUPPORT_REPEAT_SET
-)
+from homeassistant.components.media_player import MediaPlayerEntity, MediaPlayerEntityFeature, PLATFORM_SCHEMA
 from homeassistant.const import (
     CONF_HOST,
     CONF_NAME,
@@ -43,33 +28,33 @@ __version__ = "0.5"
 _LOGGER = logging.getLogger(__name__)
 
 SUPPORT_851N = (
-    SUPPORT_PAUSE
-    | SUPPORT_PLAY
-    | SUPPORT_STOP
-    | SUPPORT_PREVIOUS_TRACK
-    | SUPPORT_NEXT_TRACK
-    | SUPPORT_SELECT_SOURCE
-    | SUPPORT_TURN_OFF
-    | SUPPORT_TURN_ON
-    | SUPPORT_VOLUME_STEP
-    | SUPPORT_SHUFFLE_SET
-    | SUPPORT_REPEAT_SET
+    MediaPlayerEntityFeature.PAUSE
+    | MediaPlayerEntityFeature.PLAY
+    | MediaPlayerEntityFeature.STOP
+    | MediaPlayerEntityFeature.PREVIOUS_TRACK
+    | MediaPlayerEntityFeature.NEXT_TRACK
+    | MediaPlayerEntityFeature.SELECT_SOURCE
+    | MediaPlayerEntityFeature.TURN_OFF
+    | MediaPlayerEntityFeature.TURN_ON
+    | MediaPlayerEntityFeature.VOLUME_STEP
+    | MediaPlayerEntityFeature.SHUFFLE_SET
+    | MediaPlayerEntityFeature.REPEAT_SET
 )
 
 SUPPORT_851N_PREAMP = (
-    SUPPORT_PAUSE
-    | SUPPORT_PLAY
-    | SUPPORT_STOP
-    | SUPPORT_PREVIOUS_TRACK
-    | SUPPORT_NEXT_TRACK
-    | SUPPORT_SELECT_SOURCE
-    | SUPPORT_TURN_OFF
-    | SUPPORT_TURN_ON
-    | SUPPORT_VOLUME_MUTE
-    | SUPPORT_VOLUME_STEP
-    | SUPPORT_VOLUME_SET
-    | SUPPORT_SHUFFLE_SET
-    | SUPPORT_REPEAT_SET
+    MediaPlayerEntityFeature.PAUSE
+    | MediaPlayerEntityFeature.PLAY
+    | MediaPlayerEntityFeature.STOP
+    | MediaPlayerEntityFeature.PREVIOUS_TRACK
+    | MediaPlayerEntityFeature.NEXT_TRACK
+    | MediaPlayerEntityFeature.SELECT_SOURCE
+    | MediaPlayerEntityFeature.TURN_OFF
+    | MediaPlayerEntityFeature.TURN_ON
+    | MediaPlayerEntityFeature.VOLUME_MUTE
+    | MediaPlayerEntityFeature.VOLUME_STEP
+    | MediaPlayerEntityFeature.VOLUME_SET
+    | MediaPlayerEntityFeature.SHUFFLE_SET
+    | MediaPlayerEntityFeature.REPEAT_SET
 )
 
 DEFAULT_NAME = "Cambridge Audio Azur 851N"
